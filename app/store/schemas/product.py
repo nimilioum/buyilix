@@ -1,6 +1,5 @@
 import datetime
-
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 
 
 class ProductBase(BaseModel):
@@ -11,6 +10,18 @@ class ProductBase(BaseModel):
 
     class Config:
         orm_mode = True
+
+    @validator('amount')
+    def amount_positive_integer(cls, v: int):
+        if v < 0:
+            raise ValueError("amount cannot be less than zero")
+        return v
+
+    @validator('price')
+    def price_positive_float(cls, v: float):
+        if v < 0:
+            raise ValueError("price cannot be less than zero")
+        return v
 
 
 class ProductCreateInput(ProductBase):
