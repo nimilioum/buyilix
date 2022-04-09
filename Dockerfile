@@ -1,23 +1,20 @@
 # pull official base image
-FROM python:3.9.4-alpine
+FROM python:3.10-slim-buster
 
 # set work directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # copy requirements file
-COPY ./requirements.txt /usr/src/app/requirements.txt
+COPY ./Pipfile .
+COPY ./Pipfile.lock .
 
 # install dependencies
-RUN set -eux \
-    && apk add --no-cache --virtual .build-deps build-base \
-        libressl-dev libffi-dev gcc musl-dev python3-dev \
-    && pip install --upgrade pip setuptools wheel \
-    && pip install -r /usr/src/app/requirements.txt \
-    && rm -rf /root/.cache/pip
+RUN python3 -m pip install pipenv
+RUN pipenv install --system --deploy --ignore-pipfile
 
 # copy project
-COPY . /usr/src/app/
+COPY . .

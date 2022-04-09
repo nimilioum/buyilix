@@ -3,7 +3,7 @@ from app.store.services import ProductService
 from app.store.schemas import ProductListModel, ProductReadModel, ProductCreateInput
 
 router = APIRouter(
-    prefix="/product"
+    prefix="/products"
 )
 
 

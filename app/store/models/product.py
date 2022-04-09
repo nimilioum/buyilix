@@ -1,23 +1,23 @@
-from sqlmodel import SQLModel, Field
-from pydantic import validator, ValidationError
+import sqlalchemy as sa
+from lib.models import Base
 
 
-class ProductBase(SQLModel):
-    title: str
-    description: str
-    amount: int
-    price: float
+# ss
+# @validator('amount')
+# def amount_validator(cls, v: int):
+#     if v < 0:
+#         return ValidationError("amount cannot be less than zero")
+#
+# @validator('price')
+# def price_validator(cls, v: float):
+#     if v < 0:
+#         return ValidationError("price cannot be less than zero")
 
 
-class Product(ProductBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
+class Product(Base):
+    __tablename__ = 'product'
 
-    # @validator('amount')
-    # def amount_validator(cls, v: int):
-    #     if v < 0:
-    #         return ValidationError("amount cannot be less than zero")
-    #
-    # @validator('price')
-    # def price_validator(cls, v: float):
-    #     if v < 0:
-    #         return ValidationError("price cannot be less than zero")
+    title = sa.Column(sa.String)
+    description = sa.Column(sa.Text)
+    amount = sa.Column(sa.Integer)
+    price = sa.Column(sa.Float)

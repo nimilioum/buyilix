@@ -8,6 +8,9 @@ fastapi = "==0.75.0"
 sqlmodel = "*"
 alembic = "*"
 python-dotenv = "*"
+uvicorn = "*"
+psycopg2-binary = "*"
+psycopg2 = "*"
 
 [dev-packages]
 

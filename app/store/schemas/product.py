@@ -1,4 +1,16 @@
-from app.store.models import ProductBase
+import datetime
+
+from pydantic import BaseModel
+
+
+class ProductBase(BaseModel):
+    title: str
+    description: str
+    amount: int
+    price: float
+
+    class Config:
+        orm_mode = True
 
 
 class ProductCreateInput(ProductBase):
@@ -11,7 +23,9 @@ class ProductUpdateInput(ProductBase):
 
 class ProductReadModel(ProductBase):
     id: int
+    created_at: datetime.datetime
+    updated_at: datetime.datetime
 
 
-class ProductListModel(ProductBase):
-    id: int
+class ProductListModel(ProductReadModel):
+    pass
