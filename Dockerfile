@@ -18,3 +18,6 @@ RUN pipenv install --system --deploy --ignore-pipfile
 
 # copy project
 COPY . .
+
+# migrate
+RUN pipenv run alembic upgrade head
